@@ -239,16 +239,17 @@
     // Отправка заявки боту
     // ---------------------------------------------
     async function sendToBot(fio, phone) {
-        // Отправляем через sendData (только текстовые данные)
-        const data = JSON.stringify({
-            action: 'new_order',
-            fio: fio,
-            phone: phone
-        });
-        tg.sendData(data);
-        // Открываем чат с ботом для отправки чека
-        tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot'); // ← замени на username своего бота
-    }
+    // 1. Отправляем данные боту (текст)
+    const data = JSON.stringify({
+        action: 'new_order',
+        fio: fio,
+        phone: phone
+    });
+    tg.sendData(data);
+
+    // 2. Открываем чат с ботом для отправки чека
+    tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
+}
 
     // ---------------------------------------------
     // Обработчики событий
