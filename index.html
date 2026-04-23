@@ -247,7 +247,12 @@
         });
         tg.sendData(data);
         // Открываем чат с ботом для отправки чека
-        tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
+        // Проверяем, поддерживается ли метод
+if (!tg.openTelegramLink || !tg.isAvailable || !tg.isAvailable('openTelegramLink')) {
+    tg.showAlert('Невозможно открыть ссылку. Пожалуйста, обновите Telegram или напишите боту /start.');
+    return;
+}
+tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
     }
 
     // ---------------------------------------------
