@@ -239,16 +239,25 @@
     // Отправка заявки боту
     // ---------------------------------------------
     async function sendToBot(fio, phone) {
-    // 1. Отправляем данные боту (текст)
-    const data = JSON.stringify({
+    // Отправляем данные боту
+    tg.sendData(JSON.stringify({
         action: 'new_order',
         fio: fio,
         phone: phone
-    });
-    tg.sendData(data);
+    }));
 
-    // 2. Открываем чат с ботом для отправки чека
+    // Открываем чат с ботом
     tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
+
+    // Если автоматический переход не сработал (заглушка или ошибка),
+    // покажем окно с ручной ссылкой
+    setTimeout(() => {
+        tg.showPopup({
+            title: 'Отправьте чек',
+            message: 'Если чат не открылся, перейдите к боту вручную:\nhttps://t.me/LEGENDARYwrx_bot',
+            buttons: [{ type: 'ok' }]
+        });
+    }, 500);
 }
 
     // ---------------------------------------------
