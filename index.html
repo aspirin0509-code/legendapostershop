@@ -239,20 +239,27 @@
     // Отправка заявки боту
     // ---------------------------------------------
     async function sendToBot(fio, phone) {
-        // Отправляем через sendData (только текстовые данные)
-        const data = JSON.stringify({
-            action: 'new_order',
-            fio: fio,
-            phone: phone
-        });
-        tg.sendData(data);
-        // Открываем чат с ботом для отправки чека
-        // Проверяем, поддерживается ли метод
-if (!tg.openTelegramLink || !tg.isAvailable || !tg.isAvailable('openTelegramLink')) {
-    tg.showAlert('Невозможно открыть ссылку. Пожалуйста, обновите Telegram или напишите боту /start.');
-    return;
+    // Отправляем текстовые данные боту
+    const data = JSON.stringify({
+        action: 'new_order',
+        fio: fio,
+        phone: phone
+    });
+    tg.sendData(data);
+
+    // Пытаемся открыть чат с ботом
+    try {
+        tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
+    } catch (e) {
+        // Если метод не сработал – показываем инструкцию
+        tg.showAlert(
+            'Не удалось открыть чат автоматически.\n\n' +
+            '1. Напиши команду /start боту @LEGENDARYwrx_bot\n' +
+            '2. Затем отправь в этот чат фото чека.',
+            function() {} // колбэк не обязателен
+        );
+    }
 }
-tg.openTelegramLink('https://t.me/LEGENDARYwrx_bot');
     }
 
     // ---------------------------------------------
